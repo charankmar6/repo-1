@@ -1,0 +1,34 @@
+version: "2"
+
+services:
+  rabbitmq:
+    image: usaze-nonprod.dtr.metlife.com/9498-gssp/rabbitmq-clusternode-tls:3.6-met1.0-dev
+    hostname: rabbitmq
+    restart: unless-stopped
+    environment:
+      - constraint:com.metlife.docker.nodetype==worker
+      - reschedule=on-node-failure
+    ports:
+      - "15672"
+    labels:
+      com.docker.swarm.reschedule-policies: "[\"on-node-failure\"]"
+      com.metlife.docker.countrycode: "us"
+      com.metlife.docker.cloud: "azure"
+      com.metlife.docker.datacenter: "usaze"
+      com.metlife.docker.swarm: ""
+      com.metlife.docker.env: "qa"
+      com.metlife.docker.startcount: "1"
+      com.metlife.docker.expectedcount: "1"
+      com.metlife.docker.lowcount: "1"
+      com.metlife.docker.highcount: "1"
+      com.metlife.docker.eaicode: "9498"
+      com.metlife.docker.application: "gssp"
+      com.metlife.docker.servicename: "gssp-rabbit-tls"
+      com.docker.ucp.access.label: "9498"
+    networks:
+      app:
+
+networks:
+  app:
+    external:
+      name: 9498-ol-design-app

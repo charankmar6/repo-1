@@ -1,0 +1,48 @@
+[aq1096201@USAZEBASE0001L 9498gsspcoremongodb]$ vi docker-compose.yml
+      com.metlife.docker.startcount: "3"
+      com.metlife.docker.expectedcount: "3"
+      com.metlife.docker.lowcount: "2"
+      com.metlife.docker.countrycode: "US"
+      com.metlife.docker.cloud: "azure"
+      com.metlife.docker.datacenter: "usaze"
+      com.metlife.docker.swarm: ""
+      com.metlife.docker.eaicode: "9498"
+      com.metlife.docker.stack: "database"
+      com.metlife.docker.application: "9498gsspmongodb"
+      com.docker.ucp.access.label: "9498"
+    networks:
+     9498-gssp-core-ol-app:
+
+er-compose.yml
+    hostname: mongo3_9498_core
+    restart: always
+    volumes:
+     - /mongo/9498gsspuscoremongo/data/db:/mongo/data/db
+     - /mongo/9498gsspuscoremongo/logs:/mongo/logs
+    ports:
+     - "27019:27017"
+    environment:
+    - "constraint:com.metlife.docker.mongo==true"
+    - affinity:container!=9498gsspcoremongodb*
+    labels:
+      com.metlife.docker.author: "Jonell Taylor <jonell.o.taylor@metlife.com>"
+      com.metlife.docker.maintainer: "Jonell Taylor <jonell.o.taylor@metlife.com>"
+      com.metlife.docker.env: "qa"
+      com.metlife.docker.servicename: "mongodb"
+      com.metlife.docker.startcount: "3"
+      com.metlife.docker.expectedcount: "3"
+      com.metlife.docker.lowcount: "2"
+      com.metlife.docker.countrycode: "US"
+      com.metlife.docker.cloud: "azure"
+      com.metlife.docker.datacenter: "usaze"
+      com.metlife.docker.swarm: ""
+      com.metlife.docker.eaicode: "9498"
+      com.metlife.docker.stack: "database"
+      com.metlife.docker.application: "9498gsspmongodb"
+      com.docker.ucp.access.label: "9498"
+    networks:
+     9498-gssp-core-ol-app:
+
+networks:
+ 9498-gssp-core-ol-app:
+    external: true
