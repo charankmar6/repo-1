@@ -1,0 +1,171 @@
+ 
+
+version: "3.2"
+ 
+services:
+  datapower:
+    image: dtr.metlife.com/infra/datapower-gateway-test:7.6.0.6.297431
+    ports:
+      - target: 9090
+        published: 9090
+        protocol: tcp
+        mode: host
+      - target: 22
+        published: 2222
+        protocol: tcp
+        mode: host
+      - target: 5550
+        published: 5550
+        protocol: tcp
+        mode: host
+      - target: 5554
+        published: 5554
+        protocol: tcp
+        mode: host
+      - target: 30130
+        published: 30130
+        protocol: tcp
+        mode: host
+      - target: 30006
+        published: 30006
+        protocol: tcp
+        mode: host
+      - target: 30007
+        published: 30007
+        protocol: tcp
+        mode: host
+      - target: 30023
+        published: 30023
+        protocol: tcp
+        mode: host
+      - target: 30025
+        published: 30025
+        protocol: tcp
+        mode: host
+      - target: 30131
+        published: 30131
+        protocol: tcp
+        mode: host
+      - target: 30005
+        published: 30005
+        protocol: tcp
+        mode: host
+      - target: 30132
+        published: 30132
+        protocol: tcp
+        mode: host
+      - target: 30001
+        published: 30001
+        protocol: tcp
+        mode: host
+    dns_search:
+       - 11512-gssp-ol-app-int
+       - 11512-gssp-ol-app-int2
+       - 10966-gssp-ol-app-int
+       - 10966-gssp-ol-app-int2
+       - 10966-gssp-ol-app-int3
+       - 10966-gssp-ol-app-int4
+       - 11034-gssp-ol-app-int
+       - 9498-gssp-core-svcg-ptrns-ol-app-int
+       - 11512-gssp-ol-app-int3
+    environment:
+        - DATAPOWER_ACCEPT_LICENSE=true
+        - DATAPOWER_WORKER_THREADS=3
+    volumes:
+         - /metlife/config/10962-shared-datapower-gateway/config:/drouter/config
+         - /metlife/config/10962-shared-datapower-gateway/local:/drouter/local
+         - /metlife/config/10962-shared-datapower-gateway/usrcerts:/root/secure/usrcerts
+         - /metlife/config/10962-shared-datapower-gateway/sharedcerts:/root/secure/sharedcerts
+    deploy:
+          mode: replicated
+          replicas: 2
+          endpoint_mode: dnsrr
+          placement:
+            constraints:
+              - node.labels.com.metlife.docker.datapower == true
+              - node.labels.com.metlife.docker.datapower.env == int
+          labels:
+            com.metlife.docker.swarm: ""
+            com.metlife.docker.env: "nonprod"
+            com.metlife.docker.lowcount: "1"
+            com.metlife.docker.highcount: "2"
+            com.metlife.docker.eaicode: "10966"
+            com.metlife.docker.dpccode: "C867 CORP DIST"
+            com.metlife.docker.application: "datapower"
+            com.metlife.docker.servicename: "datapower"
+            com.docker.ucp.access.label: "/Shared/Infra/Datapower"
+          restart_policy:
+            condition: on-failure
+            delay: 30s
+            max_attempts: 3
+            window: 120s
+    networks:
+       11512-app-int3:
+       11512-web-int3:
+       11512-app-int:
+       11512-web-int:
+       11512-app-int2:
+       11512-web-int2:
+       10966-app-int:
+       10966-web-int:
+       10966-app-int2:
+       10966-web-int2:
+       10966-app-int3:
+       10966-web-int3:
+       10966-app-int4:
+       10966-web-int4:
+       11034-app-int:
+       11034-web-int:
+       
+networks:
+  11512-web-int:
+    external:
+      name: 11512-gssp-ol-web-int
+  10966-app-int:
+    external:
+      name: 10966-gssp-ol-app-int
+  10966-web-int:
+    external:
+      name: 10966-gssp-ol-web-int
+  10966-app-int2:
+    external:
+      name: 10966-gssp-ol-app-int2
+  10966-web-int2:
+    external:
+      name: 10966-gssp-ol-web-int2
+  10966-app-int3:
+    external:
+      name: 10966-gssp-ol-app-int3
+  10966-web-int3:
+    external:
+      name: 10966-gssp-ol-web-int3
+  10966-app-int4:
+    external:
+      name: 10966-gssp-ol-app-int4
+  10966-web-int4:
+    external:
+      name: 10966-gssp-ol-web-int4
+  11512-app-int:
+    external:
+      name: 11512-gssp-ol-app-int
+  11512-web-int2:
+    external:
+      name: 11512-gssp-ol-web-int2
+  11512-app-int2:
+    external:
+      name: 11512-gssp-ol-app-int2
+  11034-web-int:
+    external:
+     name: 11034-gssp-ol-web-int
+  11034-app-int:
+    external:
+     name: 11034-gssp-ol-app-int
+  9498-app-int:
+    external:
+      name: 9498-gssp-core-svcg-ptrns-ol-app-int
+  11512-web-int3:
+    external:
+      name: 11512-gssp-ol-web-int3
+  11512-app-int3:
+    external:
+      name: 11512-gssp-ol-app-int3
