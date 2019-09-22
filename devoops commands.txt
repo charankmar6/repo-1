@@ -1,0 +1,114 @@
+tail -100f errorlogs
+yum install iputils
+crtl+pq to come out of he container dont press exit or ctrl c
+docker rm -f conid (to remove the container forcefully)
+docker run -dit --name httpd -p 8082:80 httpd
+docker run --name nginx -d -p 8081:80 nginx
+
+create volumes and send data to host:
+-------------------------------------
+docker run -d -p 8080:80 -v /root:/opt nginx
+df -h (to see the mount)
+docker run -d  -v /opt/:/tmp/ nginx
+docker exec -it 0b3691bc87b9246443eb83e0a839cb21280a21783101b9db3e50107dafca22f5 /bin/bash
+docker run cli (google it)
+docker rm -f $(docker ps -a -q)
+docker build -t image . (to create a image )
+docker build -t charankmar6@gmail.com/apache2:0.1 . (naming convention for non-official images)
+docker run -it -p 80:80 -d charankmar6/apache2 /bin/bash
+docker run -it -p 80:80  charankmar6/apache2:18.10 /bin/bash
+after going inside the container service apache2 start
+
+FROM ubuntu:18.10
+MAINTAINER charan
+RUN apt-get update
+RUN apt-get install apache2 -y
+COPY index.html "/var/www/html/index.html"
+EXPOSE 80
+ENTRYPOINT ["echo"]
+CMD ["hello-world"]
+
+note:if you want to copy files form your local file system you can use copy
+docker run apache2:0.2 echo hi
+     if you want to download from web then use add
+
+docker run -it tomcat:8-jre8 /bin/bash
+best way of managing docker files is put them in version control system
+-what we doing is putting jenikns war file in tomcat webapps folder for that
+
+FROM tomcat:8.0-jre8
+MAINTAINER charan
+ADD "url" "/usr/local/tomcat/webapps/jenkins.war
+EXPOSE 8080
+CMD ["catalina.sh","run"]
+docker exec contid cat "/var/lib/etc" (no need to go inside the container)
+to run the env variable which is dynamic:
+docker run --env START_FOLDER=/var/www/html -it ubuntu:16.02 /bin/bash
+
+networks:
+--------
+docker network ls
+docker network create -d bridge --subnet 10.1.0.0/24 qt-bridge (create network)
+docker run -it --name c1 --network qt-bridge ubuntu /bin/bash (adding container to network)
+docker inspect c1 (to know the network)
+2789/udp,7946/tcp/udp, 2377/tcp  ports should be open
+docker swarm init --advertise-addr 192.168.99.121
+docker swarm join --token ...joined as the worker
+docker node ls
+docker service create --name qt-svc --network qt-over --replicas 3 hello-world 
+docker service ls
+docker service ps "ps-svc"(on host)
+docker stats --all
+docker stats --no-stream cid
+docker update is used to increase the memory look in google.(cpu .memory,swap)
+
+docker swarm:
+-------------
+docker service create --name "ang-app" -p 4200:4200 --mode global demoapp1
+--mode global:The application is delployed in all the nodes in the swarm
+docker ps
+docker ls (to know the node as global/replicated)
+docker service ps ang-app (To know application is running on which container and node)
+instance is nothing but application
+docker service rm ang-app (after removing run the below command)
+docker service create --name "ang-app" -p 4200:4200 --replicas 3 demoapp1
+This would indicate that you will have 2 running instanes of this serivice b/w this 3 nodes
+
+-scalling the application
+docker service scale ang-app=5
+docker service ps ang-app (to know in which node the application is deployed)
+if you want to drain manager/worker use the following command
+docker node update --availability drain manager-1/worker
+docker node update --availability active manager-1/worker
+-----------
+
+--rm command will remove the container when we come out of it, when you use docker ps -a command it will not be there
+docker run -it --rm apline:3.4 /bin/bash
+docker images -a will give you the intermediate images
+every line is created as image, and it is called as cache
+-To remove the dangling images
+ docker images --filter "dangling=true"
+ docker rmi $(docker images -a --filter "dangling=true")
+
+docker-compose config (to check the validity of compose file)
+you can scale the services form the compose file itself
+docker-compose up -d --scale database=4
+
+stack:
+-----
+docker stack deploy (Deploy a new stack or update an existing stack)
+docker stack ls	(List stacks)
+docker stack ps	8123-FPU-Int (List the tasks in the stack)
+docker stack rm	8123-FPU-Int (Remove one or more stacks)
+docker stack services 8123-FPU-Int 	(List the services in the stack)
+
+
+
+
+
+
+
+
+
+
+

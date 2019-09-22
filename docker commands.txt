@@ -1,0 +1,179 @@
+docker rmi $(docker images --filter "dangling=true" -q --no-trunc) 
+docker network inspect 10966-gssp-ol-app-prod  | grep "IPv4Address" | wc -l
+docker volume ls -f dangling=true
+scan "ws_lookup"
+telnet 10.49.92.6 10005
+
+ps -aux | grep qa.claims.online.metlife.com
+curl -v https://metintrvlp402:20108
+curl -k https://10.49.96.79:10001/public/keepalive.html
+telnet 10.49.96.75 10001
+
+docker stats --all
+docker stats --no-stream cid
+
+docker stack deploy -c docker-compose.yml 10966-GSSP-rabbitmq-standalone-tls_qa3 --with-registry-auth
+docker stack ps 10966-GSSP-rabbitmq-standalone-tls_qa3
+ps -aux | grep -i defunc 
+docker ps -a | grep ucp-con (to see the connetion between backend server and ucp)
+docker-compose up -d
+docker-compose ps
+
+[psakhireddy@ustry1dmzv0087l sm.walter.metlife.com]$ ps -ef | grep sm.walter.metli | grep LLAWP
+apache   32272     1  0 22:17 ?        00:00:00 LLAWP /metlife/config/tenants/sm.walter.metlife.com/WebAgent.conf -APACHE24
+
+
+
+FOR CISCO
+----------
+[ap1148711@usazebasv00c8l ~]$ rpm -qa | grep cisco
+ciscoampconnector-1.10.2.630-1.el7.x86_64
+
+[ap1148711@usazebasv00c8l ~]$ /opt/cisco/amp/bin/ampcli --version
+AMP for Endpoints Connector v1.10.2.630
+
+
+Container logs
+------------------
+docker ps --filter "status=exited"
+cp docker-compose.yml cd ../pallu/
+docker service logs 11658_EOS-int_coverageservice 
+
+login container 
+docker exec -it containerID /bin/bash
+choose the location where it has been, come out from container 
+Exit from container ---> ctrl pq
+docker cp bde14c9a658e:/opt/appdynamics/appserveragent/ver4.4.0.6/conf/controller-info.xml /tmp/SGASGBASV0012L-controller-info.xml 
+then copy logs from server to local --> through WinScp
+
+
+docker ps -a | grep ContainerName
+docker inspect ContainerID
+docker network disconnect -f NetworkName ContainerName
+docker rm -f ContainerName
+docker network ls | grep overlay | awk '{print $2}' | xargs docker network inspect | grep -i -B 200 ContainerName
+docker network inspect 9498-ol-design-app | grep -i audit(name of the part of the container) 
+1" 
+
+zombie process
+-------------------
+zombie process are running,
+[at1148701@USAZEBASU0585L ~]$  ps -aux | grep -i defunc
+root      80298  1.4  0.0      0     0 ?        Z    02:22   1:16 [wscanhw] <defunct>
+root      80526  0.2  0.0      0     0 ?        Z    02:28   0:11 [wscanhw] <defunct>
+
+~]$ uptime
+01:47:26 up 5 days, 18:59,  2 users,  load average: 99.25, 106.19, 104.59
+
+free -m
+
+BL group BSG_met_cope_packager_role_app7968  access in IDM.
+
+hostname -I | awk '{print $1}'
+
+GITO-OPS-Server Linux-L2-US - linux
+GITO-OPS-AZCloud-L2-GLOB - Azure
+
+cd /metlife/htdocs/dev.myapp.metlife.com  
+cp -r /metlife/runtime/siteminder/12.52/webagent/samples/* .
+
+ps -ef | grep LLAWP | grep uat.ibm
+ps -ef | grep -i httpd | grep uat.ibm
+ps -ef | grep 27019  --> port
+
+
+Apache QA proxy -
+user - aq728001
+pass - rik7bYka
+
+
+Dev+INT proxy server
+username - ai728001
+password - of7vuAra
+
+Prod & DR Proxy server access:
+user - su - ap728001
+pass - Ref6kald
+
+docker network ls | grep overlay | awk '{print $2}' | xargs docker network inspect | grep -i "Subnet" | sort   --> to get the available sub networks 
+
+unset DOCKER_CERT_PATH DOCKER_HOST DOCKER_TLS_VERIFY  --> unload client bunlde (get back)
+cn=app_10826_gtodmacaasld_ch,cn=users,dc=metnet,dc=net  ---> to create any team from ucp (for UCP Collection)
+
+docker start $(docker ps -a -q -f status=exited)
+
+docker stack deploy -c docker-compose.yml 10966-GSSP-rabbitmq-standalone-tls_qa3 --with-registry-auth
+docker stack deploy -c docker-compose.yml <stack_name> --with-registry-auth
+
+docker stack ps 10966-GSSP-rabbitmq-standalone-tls_qa3 <Stack-Name>
+
+docker stack ls
+
+docker stack rm 10966-GSSP-rabbitmq-standalone-tls_qa3 <Stack-Name>
+================================================================
+
+Example change for UCP collection creation --> CTASK0558448
+Bryan Davies--> Mail for required details to create DTR Repo 
+
+UCP collection creation --> CHG0251078
+
+some script for ping to multiple host or ips from single server.
+---------------------------------------------------------------
+Need to prepare list.txt file with list of destination  ip’s -
+[ap1096224@ustry1basv010cl tmp]$ cat list.txt
+10.90.38.105
+10.218.39.79
+
+cat list.txt | xargs -n1 ping -c 2
+
+
+Team, include below resources in Health Check report communication going forward.
+
+•	9pm EST
+•	2am EST
+•	7am EST
+•	1pm EST
+•	4:30pm EST
+
+https://metlifeprod.service-now.com/kb_view.do?sysparm_article=KB0015910 --> Directory Group of the team that needs access to UCP 
+
+
+GSSP_DevOps <GSSP_DevOps@metlife.com>
+PlatOps_Environment_Management <PlatOps_Environment_Management@metlife.com>; 
+Campbell, Paul <pcampbell@metlife.com>; 
+Rupasinghe, Suneth <srupasinghe@metlife.com>; 
+Mahadevan, Subbu <subramanian.mahadevan@metlife.com>; 
+Lalu, Jerin jerin.lalu@metlife.com
+Baldwin, Phil pbaldwin@metlife.com
+
+userid/Pw: admin/splunkdocker  
+https://10.215.144.11:8000/en-US/app/launcher/home 
+
+From today 3pm, we have to send the monitoring update to our DL at every 4 hours – 3pm, 7pm , 11pm, 7 am and 11 am. Please do 
+
+1)	Make sure all FAP containers are up in OLD and NEW Infra.
+
+
+CTASK0563811/CTASK0563812 : Create New ports for Apache and UCP: The apache port 10002 is being used by CHG0246929 for INT. Please check with Jon.
+
+
+CPU and Memory usage,
+for i in `docker ps | grep -iE 'fapui|fapwebserver' | awk '{print $1}'`; do docker stats --no-stream --format "table {{.Name}}\t\t{{.CPUPerc}}\t{{.MemUsage}}"  $i; done | sort -r | tail -7
+
+To check connectivity,
+for i in `docker ps | grep -i 'fapwebserver' | awk '{print $1}'`; do echo "Ping 10966-gssp-fap_usgsspfapui from $i" ; docker exec -it $i  ping -c1 10966-gssp-fap_usgsspfapui; echo -e "\n\n"; done
+
+
+client: etcd cluster is unavailable or misconfigured: error #0: client: etcd member https://10.215.148.37:12379 has no leader
+
+[at1148701@USAZEBASU0585L ~]$ sudo netstat -antup | grep -i 30018
+tcp6       0      0 :::30018             
+
+   :::*                    LISTEN      24511/dockerd
+
+CHG0264921 -- sample change for repo creation
+
+zureDP): tid(4066)[168.63.129.16]: SSL library error: error:140780E5:SSL routines:ssl23_read:ssl handshake failure
+
+from Cedric Anderson to everyone:
+USAZEBASU058FL

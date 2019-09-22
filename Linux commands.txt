@@ -1,0 +1,35 @@
+last reboot (to know when the system is last rebooted)
+-https://www.tecmint.com/understand-linux-load-averages-and-monitor-performance/
+
+-To limit the cpu utilization
+$ cpulimit -l 30 -p 2331 &
+
+-killing zombie process:
+ps aux | grep Z
+kill -s SIGCHLD pid
+
+-curl command: curl -k -v -H "Content-Type:application/json" -H "x-external-service-id:spi-aus" -X POST –d '{<replace json file content>}' https://datapower:30012/esb/v1/services/applications/submit
+
+-for reboot:
+reboot
+uname -r
+shutdown -r
+-----------------------------
+-curl -k -v -H "Content-Type:application/json" -H "x-external-service-id:spi-aus" -X POST –d '{<replace json file content>}' https://datapower:30012/esb/v1/services/applications/submit
+
+last reboot(to know then system last rebooted)
+
+-to find duplicate ip's
+qq incorrect
+nmap,arpwatch
+---------------------
+telnet <Ip>:Port 
+curl -v https://132.168.01.1:44441
+curl -v telnet://132.168.01.1:44441
+curl -v telnet https://10.215.104.112:30019
+
+sudo netstat 10.215.104.112 30019
+curl -v telnet 10.173.0.244 8181
+netstat -anp | grep 10.173.0.244:8181
+curl -v telnet://10.173.0.244:8181
+curl -v telnet://appd.metlife.com.au
