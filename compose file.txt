@@ -1,0 +1,66 @@
+version: "2"
+
+services:
+  docker-machine-agent:
+#    build: .
+#    container_name: docker-machine-agent
+    image: dtr.metlife.com/infra/appdynamics-agent:4.5.12.2205v2
+    environment:
+      - APPD_HOST=qa.appd.metlife.com
+      - APPD_PORT=8091
+      - APPD_ACCOUNT_NAME=customer1
+      - APPD_ACCESS_KEY=9c94ee08-a3fb-403a-b726-183888f93515
+      - APPD_SSL_ENABLED=true
+      - affinity:com.metlife.docker.servicename!=appdynamics
+    volumes:
+      - /:/hostroot:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      com.metlife.docker.servicename: "appdynamics"
+
+---------------------------------
+
+{"log":"2019-12-19 22:06:23.407|severity=ERROR|pid=1|service=metlife-gssp-users-profile-service|gsspTrxId=|trace=9b06800a5fabac9a|span=9b06800a5fabac9a|exportable=false|thread=https-jsse-nio-8080-exec-35|class=g.CORE.SetLoggingContext$InvokeSPIGet|loginId=|customerId=8116590|message=SPI_NAME=Customers|SPI_RESPONSE_TYPE=EXCEPTION: Error retrieving response|stacktrace=org.springframework.web.client.ResourceAccessException: I/O error on GET request for \"https://eipservice/v1/customers\": com.netflix.client.ClientException: Number of retries on next server exceeded max 3 retries, while making a call for: datapower:30005; nested exception is java.io.IOException: com.netflix.client.ClientException: Number of retries on next server exceeded max 3 retries, while making a call for: datapower:30005\u0009\u0009at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:666)\u0009\u0009at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:621)\u0009\u0009at org.springframework.web.client.RestTemplate.exchange(RestTemplate.java:540)\u0009\u0009at
+
+-----------------------------
+
+[ap1182901@ustry1metv05eel ~]$ cd /metlife/
+[ap1182901@ustry1metv05eel metlife]$ ls
+archive  logs
+[ap1182901@ustry1metv05eel metlife]$ sudo mkdir -p /metlife/runtime/installed/AppD45
+[ap1182901@ustry1metv05eel metlife]$  id ap1182901
+
+uid=1032136883(ap1182901) gid=1005200513(domain users) groups=1005200513(domain users),997807654(cfyp_metlifeglobal_unixprofiles),241791985(gpusr_denyintlogon_app6764_rd),1032133186(app_11829_bigid_prod_ch),342479218(bsg_removedfromtricare),1032164315(cfyu_11829_db2_prod_app_log_bigid_rd)
+[ap1182901@ustry1metv05eel metlife]$
+[ap1182901@ustry1metv05eel metlife]$ sudo chown -R 1032136883:1005200513 runtime
+[ap1182901@ustry1metv05eel metlife]$ cd runtime/installed/AppD45
+[ap1182901@ustry1metv05eel AppD45]$ vim docker-compose.yml
+[ap1182901@ustry1metv05eel AppD45]$ sudo docker-compose up -d
+Creating network "appd45_default" with the default driver
+Pulling docker-machine-agent (dtr.metlife.com/infra/appdynamics-agent:4.5.15.2316)...
+4.5.15.2316: Pulling from infra/appdynamics-agent
+a7344f52cb74: Pull complete
+515c9bb51536: Pull complete
+e1eabe0537eb: Pull complete
+4701f1215c13: Pull complete
+6b9ed30be591: Pull complete
+6b4ad44e78ba: Pull complete
+b044a9e8aebf: Pull complete
+99babf4bb54a: Pull complete
+4da4573c7a3c: Pull complete
+Digest: sha256:ebd26ed28e42658fb4c492abbe6fbdc46ff1c16727895b966240ce5b3320c631
+Status: Downloaded newer image for dtr.metlife.com/infra/appdynamics-agent:4.5.15.2316
+Creating appd45_docker-machine-agent_1 ... done
+[ap1182901@ustry1metv05eel AppD45]$ sudo docker-compose ps
+            Name                           Command               State   Ports
+------------------------------------------------------------------------------
+appd45_docker-machine-agent_1   /bin/sh -c "${MACHINE_AGEN ...   Up
+[ap1182901@ustry1metv05eel AppD45]$
+
+------------------
+ap1182901
+yudved0A
+
+Just for easy copy-pasting, refer below steps:
+Note: During vim, tabs are getting added while pasting contents in docker-compose.yml file, :set paste and then enter and paste content and edit first line version word properly in first line and save.
+
